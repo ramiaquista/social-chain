@@ -1,12 +1,27 @@
-import { profileId, useLogin, useProfilesManaged } from "@lens-protocol/react-web";
+import {
+  profileId,
+  useLogin,
+  useProfilesManaged,
+} from '@lens-protocol/react-web';
 
-import { ErrorMessage } from "./ErrorMessage";
-import { Loading } from "./Loading";
-import { Button } from "./Button";
+import { ErrorMessage } from './ErrorMessage';
+import { Loading } from './Loading';
+import { motion } from 'framer-motion';
+import { Button } from './Button';
 
-export function LoginForm({ owner, onSuccess }: { owner: string; onSuccess?: () => void }) {
+export function LoginForm({
+  owner,
+  onSuccess,
+}: {
+  owner: string;
+  onSuccess?: () => void;
+}) {
   const { execute: login, loading: isLoginPending } = useLogin();
-  const { data: profiles, error, loading } = useProfilesManaged({ for: owner, includeOwned: true });
+  const {
+    data: profiles,
+    error,
+    loading,
+  } = useProfilesManaged({ for: owner, includeOwned: true });
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -14,7 +29,7 @@ export function LoginForm({ owner, onSuccess }: { owner: string; onSuccess?: () 
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const id = profileId(formData.get("id") as string);
+    const id = profileId(formData.get('id') as string);
 
     const result = await login({
       address: owner,
@@ -22,7 +37,11 @@ export function LoginForm({ owner, onSuccess }: { owner: string; onSuccess?: () 
     });
 
     if (result.isSuccess()) {
-      console.info(`Welcome ${String(result.value?.handle?.fullHandle ?? result.value?.id)}`);
+      console.info(
+        `Welcome ${String(
+          result.value?.handle?.fullHandle ?? result.value?.id
+        )}`
+      );
       return onSuccess?.();
     }
 
@@ -38,19 +57,28 @@ export function LoginForm({ owner, onSuccess }: { owner: string; onSuccess?: () 
   }
 
   if (profiles.length === 0) {
-    return <p className="mb-4 text-base text-gray-500">No Lens Profiles found in this wallet.</p>;
+    return (
+      <p className="text-gray-300">No Lens Profiles found in this wallet.</p>
+    );
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex">
-      <fieldset className="flex place-items-center flex-col">
-        <legend className="text-base text-gray-500">Select a Lens Profile to login with.</legend>
-
-        <div className="my-4 space-y-2">
+    <motion.form
+      onSubmit={onSubmit}
+      className="space-y-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <fieldset className="space-y-4">
+        <legend className="text-lg font-semibold text-blue-300 mb-2">
+          Select a Lens Profile to login with
+        </legend>
+        <div className="space-y-3">
           {profiles.map((profile, idx) => (
             <label
               key={profile.id}
-              className="w-full items-center p-4 rounded-lg cursor-pointer border transition-colors border-gray-300 hover:border-gray-500 grid grid-cols-[24px_auto]"
+              className="flex items-center p-3 rounded-lg cursor-pointer bg-gray-800 border border-gray-700 hover:border-blue-500 transition-colors"
             >
               <input
                 disabled={isLoginPending}
@@ -58,21 +86,24 @@ export function LoginForm({ owner, onSuccess }: { owner: string; onSuccess?: () 
                 defaultChecked={idx === 0}
                 name="id"
                 value={profile.id}
-                className="box-content h-1.5 w-1.5 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-950/10 checked:border-green-500 checked:ring-green-500"
+                className="form-radio h-5 w-5 text-blue-600 bg-gray-700 border-gray-600 focus:ring-blue-500"
               />
-              <span className="text-gray-800 text-sm font-semibold">
+              <span className="ml-3 text-gray-200 text-sm font-medium">
                 {profile.handle?.fullHandle ?? profile.id}
               </span>
             </label>
           ))}
         </div>
-
-        <div>
-          <Button disabled={isLoginPending} type="submit">
-            {isLoginPending ? "Sign message in your wallet" : "Login to Lens"}
-          </Button>
-        </div>
       </fieldset>
-    </form>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        disabled={isLoginPending}
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isLoginPending ? 'Signing message...' : 'Login to Lens'}
+      </motion.button>
+    </motion.form>
   );
 }
