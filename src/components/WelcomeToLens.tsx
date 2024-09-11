@@ -32,7 +32,7 @@ export function WelcomeToLens() {
         className={commonClasses}
       >
         <h2 className="text-2xl font-bold mb-4 text-blue-400">
-          Welcome to Lens
+          Welcome to Social Chain 😄
         </h2>
         <p className="mb-4 text-gray-300">
           Connect your wallet to enter the Lens metaverse.

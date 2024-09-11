@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useSession, useLogout } from '@lens-protocol/react-web';
 import { truncateEthAddress } from '@/utils/truncateEthAddress';
 
@@ -64,7 +63,7 @@ export function SidePanel() {
       >
         <div>
           <h2 className="text-2xl font-bold text-blue-400 mb-8 pl-2 border-l-4 border-blue-400">
-            Lens Metaverse
+            Social Chain
           </h2>
           <ul className="space-y-2">
             {navItems.map((item) => (
