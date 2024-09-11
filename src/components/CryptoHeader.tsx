@@ -14,7 +14,7 @@ interface CoinData {
 export function CryptoHeader() {
   const [coins, setCoins] = useState<CoinData[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const coinsPerPage = 5; // Reduced for mobile
+  const coinsPerPage = 5;
 
   useEffect(() => {
     const fetchCoinData = async () => {

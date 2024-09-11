@@ -91,6 +91,7 @@ export function SidePanel() {
               <li key={item.name}>
                 <Link
                   href={item.href}
+                  prefetch={true}
                   className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
                     pathname === item.href
                       ? 'bg-blue-600 dark:bg-blue-500 text-white'

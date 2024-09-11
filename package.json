@@ -11,6 +11,8 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@lens-protocol/react-web": "latest",
     "@lens-protocol/wagmi": "latest",
     "@tanstack/react-query": "^5.29.2",

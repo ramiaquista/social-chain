@@ -42,3 +42,25 @@ body {
 .hover\:text-accent:hover {
   color: var(--accent);
 }
+
+@keyframes wave {
+  0% {
+    background-color: #4f46e5; /* Start color */
+  }
+  25% {
+    background-color: #3b82f6; /* Mid color */
+  }
+  50% {
+    background-color: #9333ea; /* Mid color */
+  }
+  75% {
+    background-color: #ec4899; /* Mid color */
+  }
+  100% {
+    background-color: #4f46e5; /* End color */
+  }
+}
+
+.animate-wave {
+  animation: wave 5s infinite linear;
+}
