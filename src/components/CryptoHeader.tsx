@@ -14,7 +14,7 @@ interface CoinData {
 export function CryptoHeader() {
   const [coins, setCoins] = useState<CoinData[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const coinsPerPage = 3; // Reduced for mobile
+  const coinsPerPage = 5; // Reduced for mobile
 
   useEffect(() => {
     const fetchCoinData = async () => {
@@ -59,11 +59,11 @@ export function CryptoHeader() {
   );
 
   return (
-    <header className="bg-gray-900 text-white py-2 px-4 w-full overflow-hidden relative">
+    <header className="bg-background border-b border-primary py-2 px-4 w-full overflow-hidden relative">
       <div className="flex justify-between items-center pl-12 lg:pl-0">
         <button
           onClick={prevPage}
-          className="text-blue-400 hover:text-blue-300 transition-colors"
+          className="text-primary hover:text-accent transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,26 +84,26 @@ export function CryptoHeader() {
           {displayedCoins.map((coin) => (
             <motion.div
               key={coin.id}
-              className="flex items-center whitespace-nowrap text-xs lg:text-base"
+              className="flex items-center whitespace-nowrap text-xs lg:text-sm"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="bg-blue-600 rounded-full p-1 mr-1 lg:mr-2">
+              <div className="hidden lg:block bg-primary rounded-full p-1 mr-1 lg:mr-2">
                 <img
                   src={coin.image}
                   alt={coin.symbol}
-                  className="w-4 h-4 lg:w-6 lg:h-6"
+                  className="w-4 h-4 lg:w-5 lg:h-5"
                   onError={(e) => {
                     e.currentTarget.src = `https://cryptoicons.org/api/icon/${coin.symbol.toLowerCase()}/25`;
                   }}
                 />
               </div>
-              <span className="uppercase font-semibold text-blue-400">
+              <span className="uppercase font-semibold text-primary">
                 {coin.symbol}:
               </span>
               <motion.span
-                className="ml-1 font-mono text-green-400"
+                className="ml-1 font-mono text-accent"
                 key={coin.current_price}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -116,7 +116,7 @@ export function CryptoHeader() {
         </div>
         <button
           onClick={nextPage}
-          className="text-blue-400 hover:text-blue-300 transition-colors"
+          className="text-primary hover:text-accent transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

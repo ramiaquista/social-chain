@@ -3,43 +3,42 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 17, 24, 39;
+  --foreground: #1a202c;
+  --background: #ffffff;
+  --primary: #3b82f6;
+  --secondary: #60a5fa;
+  --accent: #2563eb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.dark {
+  --foreground: #f7fafc;
+  --background: #1a202c;
+  --primary: #60a5fa;
+  --secondary: #3b82f6;
+  --accent: #93c5fd;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom right,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
+  color: var(--foreground);
+  background: var(--background);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.bg-primary {
+  background-color: var(--primary);
 }
 
-.bg-gray-800 {
-  background-color: rgba(31, 41, 55, 0.8);
-  backdrop-filter: blur(10px);
+.text-primary {
+  color: var(--primary);
 }
 
-.text-blue-400 {
-  color: #60a5fa;
+.border-primary {
+  border-color: var(--primary);
 }
 
-.hover\:text-white:hover {
-  color: #ffffff;
+.hover\:bg-secondary:hover {
+  background-color: var(--secondary);
+}
+
+.hover\:text-accent:hover {
+  color: var(--accent);
 }

@@ -1,5 +1,7 @@
 import { PublicationId, usePublication } from '@lens-protocol/react-web';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 
 type PostProps = {
   publication: PublicationId;
@@ -7,21 +9,38 @@ type PostProps = {
 
 export function Post({ publication }: PostProps) {
   const { data } = usePublication({ forId: publication });
+  const [isLiked, setIsLiked] = useState(false);
 
   if (!data) return null;
 
+  const formattedDate = formatDistanceToNow(new Date(data.createdAt), {
+    addSuffix: true,
+  });
+
   return (
     <motion.div
-      className="border border-blue-400 p-6 rounded-lg bg-gray-900 bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg hover:shadow-blue-400/30 transition-all duration-300"
-      whileHover={{ scale: 1.02 }}
+      className="border border-primary bg-background rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300"
+      whileHover={{ scale: 1.01 }}
     >
-      <p className="font-bold text-blue-400 mb-2">
-        By: {data.by.handle?.fullHandle}
-      </p>
+      <div className="flex items-center mb-3">
+        <div>
+          <p className="font-semibold text-foreground">
+            {data.by.handle?.fullHandle}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {formattedDate}
+          </p>
+        </div>
+      </div>
       {/*@ts-ignore*/}
-      <p className="text-gray-300">{data.metadata.content}</p>
-      <div className="mt-4 flex justify-end space-x-2">
-        <button className="text-blue-400 hover:text-blue-300 transition-colors">
+      <p className="text-foreground mb-4">{data.metadata.content}</p>
+      <div className="flex justify-between items-center">
+        <button
+          className={`flex items-center space-x-1 text-sm ${
+            isLiked ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'
+          } hover:text-red-500 transition-colors`}
+          onClick={() => setIsLiked(!isLiked)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -34,8 +53,9 @@ export function Post({ publication }: PostProps) {
               clipRule="evenodd"
             />
           </svg>
+          <span>{isLiked ? 'Liked' : 'Like'}</span>
         </button>
-        <button className="text-blue-400 hover:text-blue-300 transition-colors">
+        <button className="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400 hover:text-primary transition-colors">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
@@ -48,6 +68,7 @@ export function Post({ publication }: PostProps) {
               clipRule="evenodd"
             />
           </svg>
+          <span>Comment</span>
         </button>
       </div>
     </motion.div>

@@ -1,13 +1,9 @@
-import {
-  SessionType,
-  useSession as useLensSession,
-} from '@lens-protocol/react-web';
+import { useSession as useLensSession } from '@lens-protocol/react-web';
 import { useAccount as useWagmiAccount } from 'wagmi';
 import { motion } from 'framer-motion';
 
 import { ConnectWalletButton } from './ConnectWalletButton';
 import { LoginForm } from './LoginForm';
-import { LogoutButton } from './LogoutButton';
 import { truncateEthAddress } from '@/utils/truncateEthAddress';
 import { DisconnectWalletButton } from './DisconnectWalletButton';
 
@@ -21,7 +17,7 @@ export function WelcomeToLens() {
   };
 
   const commonClasses =
-    'bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg rounded-xl p-6 shadow-lg border border-blue-500 text-white';
+    'bg-background border border-primary rounded-xl p-6 shadow-lg text-foreground';
 
   if (!isConnected) {
     return (
@@ -31,10 +27,10 @@ export function WelcomeToLens() {
         animate="visible"
         className={commonClasses}
       >
-        <h2 className="text-2xl font-bold mb-4 text-blue-400">
+        <h2 className="text-2xl font-bold mb-4 text-primary">
           Welcome to Social Chain 😄
         </h2>
-        <p className="mb-4 text-gray-300">
+        <p className="mb-4 text-foreground">
           Connect your wallet to enter the Lens metaverse.
         </p>
         <ConnectWalletButton />
@@ -50,10 +46,10 @@ export function WelcomeToLens() {
         animate="visible"
         className={commonClasses}
       >
-        <h2 className="text-2xl font-bold mb-4 text-blue-400">Almost There!</h2>
-        <p className="mb-4 text-gray-300">
+        <h2 className="text-2xl font-bold mb-4 text-primary">Almost There!</h2>
+        <p className="mb-4 text-foreground">
           Connected wallet:{' '}
-          <span className="text-blue-300">{truncateEthAddress(address)}</span>
+          <span className="text-accent">{truncateEthAddress(address)}</span>
         </p>
         <LoginForm owner={address} />
         <div className="mt-4">

@@ -4,6 +4,7 @@ import { Web3Provider } from '@/components/Web3Provider';
 import { SidePanel } from '@/components/SidePanel';
 import { CryptoHeader } from '@/components/CryptoHeader';
 import './globals.css';
+import { ThemeProvider } from './ThemeContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,18 +20,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Web3Provider>
-          <div className="flex flex-col lg:flex-row">
-            <SidePanel />
-            <div className="flex-1 w-full lg:ml-64">
-              <CryptoHeader />
-              <main className="min-h-screen bg-gradient-to-br from-black to-blue-900 p-4">
-                {children}
-              </main>
+      <body className={`${inter.className} transition-colors duration-300`}>
+        <ThemeProvider>
+          <Web3Provider>
+            <div className="flex flex-col lg:flex-row min-h-screen">
+              <SidePanel />
+              <div className="flex-1 w-full lg:ml-64">
+                <CryptoHeader />
+                <main className="p-4 lg:p-8">{children}</main>
+              </div>
             </div>
-          </div>
-        </Web3Provider>
+          </Web3Provider>
+        </ThemeProvider>
       </body>
     </html>
   );
